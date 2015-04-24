@@ -75,7 +75,7 @@ namespace COSMOSClientConsole
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 COSMOSUSerContext userContext = null;
                 LoginVO loginVo = new LoginVO();
-                loginVo.UserName = "Ammu";
+                loginVo.UserName = "Admin";
                 loginVo.Password = "p@ssw0rd";
                 ServiceMessage wcfmessage = new ServiceMessage();
                 wcfmessage.ServiceParams = new object[] { loginVo };

@@ -80,7 +80,7 @@ namespace HA.COSMOS.Services
                         var userContext = new COSMOSUSerContext();
                         userContext.UserName = user.UserName;
                         userContext.SecurityToken = Guid.NewGuid().ToString();
-                        UserDataAcessLayer.UpdateUser(user.UserName, new UpdateExpression<User> 
+                        UserDataAcessLayer.UpdateUser(user.UserName, new UpdateExpression<User>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
                         { 
                             { u => u.LoginTimeUTC, DateTime.UtcNow } 
                         });

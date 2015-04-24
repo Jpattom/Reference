@@ -41,33 +41,53 @@ task CreateArtifacts -depends Compile -description "Creates build Artefacts" {
 	}
 	mkdir $currentArtifatcs
 	mkdir "$currentArtifatcs\COSMOS_Worker"
-	Copy-Item $outDir\COSMOS\log4net.* $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\MongoDB.* $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\NServiceBus.??? $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Testing.*
-	Copy-Item $outDir\COSMOS\NServiceBus.*.* $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Testing.*
-	Copy-Item $outDir\COSMOS\**.COSMOS.**.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*,**.Service.MessageHandlers.*
+
 	Copy-Item $outDir\COSMOS\HA.Common.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\HA.Contracts.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Contracts.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.DAContracts.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Entities.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.MessageHandlers.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Messages.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Mongo.DAL.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Services.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.ValueObjects.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Worker.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\HA.COSMOS.Worker.dll.config $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
-	
-		
+	Copy-Item $outDir\COSMOS\HA.NServiceBus.Utilities.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\log4net.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\MongoDB.Bson.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\MongoDB.Driver.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\Newtonsoft.Json.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.Core.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.Host.exe $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+			
 	mkdir "$currentArtifatcs\COSMOS_Service"
-	Copy-Item $outDir\COSMOS\log4net.* $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\NServiceBus.??? $currentArtifatcs\COSMOS_Service -Force -Exclude **.Testing.*
-	Copy-Item $outDir\COSMOS\NServiceBus.*.* $currentArtifatcs\COSMOS_Service -Force -Exclude **.Testing.*
-	Copy-Item $outDir\COSMOS\**.COSMOS.**.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*,**.COSMOS.DAContracts.*,HA.COSMOS.Entities.*,HA.COSMOS.MessageHandlers.*,**.DAL.*, **.Worker.*,**.Proxies.*
-	Copy-Item $outDir\COSMOS\**.WCF.**.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*,**.Proxies.*
-	Copy-Item $outDir\COSMOS\HA.Common.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+ 
+	Copy-Item $outDir\COSMOS\HA.Common.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.* 
 	Copy-Item $outDir\COSMOS\HA.Contracts.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\**.WCF.**.dll.config $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*,**.Proxies.*
-	
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Messages.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.Service.MessageHandlers.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.ValueObjects.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.WebApi.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.WebApi.dll.config $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.Wcf.Messages.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.Wcf.Services.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\log4net.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\Newtonsoft.Json.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.Core.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.Host.exe $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
+
 	mkdir "$currentArtifatcs\COSMOS_Client"
 	Copy-Item $outDir\COSMOS\HA.Common.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\HA.Contracts.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\**.WCF.Proxies.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\**.WCF.Messages.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\**.COSMOS.ValueObjects.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\COSMOSClientConsole.** $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.COSMOS.ValueObjects.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.Wcf.Messages.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\HA.Wcf.Proxies.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\Newtonsoft.Json.dll $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\COSMOSClientConsole.exe $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\COSMOSClientConsole.exe.config $currentArtifatcs\COSMOS_Client -Force -Exclude **.Tests.*
 }
 
 task Test -depends Compile  -description "Runs Unit Tests after building all the solutions" {
