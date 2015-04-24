@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1113F6B7-00A7-40F5-AB80-C2065A7A2B13}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HA.COSMOS.Worker.MessageHandlers.Tests</RootNamespace>
+    <AssemblyName>HA.COSMOS.Worker.MessageHandlers.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NServiceBus">
+      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Testing">
+      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\nunit\framework\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\tools\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="HA.Common">
+      <HintPath>..\..\build\Framework\HA.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EditAppUsersHandlerTests.cs" />
+    <Compile Include="GetAllAppUsersHandlerTests.cs" />
+    <Compile Include="LoginHandlerTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HA.COSMOS.Contracts\HA.COSMOS.Contracts.csproj">
+      <Project>{d0199f92-c6d6-4456-832d-c50e71be5c16}</Project>
+      <Name>HA.COSMOS.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.DAContracts\HA.COSMOS.DAContracts.csproj">
+      <Project>{f598de54-e531-44ca-81e9-c092c80bca1c}</Project>
+      <Name>HA.COSMOS.DAContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Entities\HA.COSMOS.Entities.csproj">
+      <Project>{ceca89ca-cd62-42bf-8050-9feede9e6e5c}</Project>
+      <Name>HA.COSMOS.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Messages\HA.COSMOS.Messages.csproj">
+      <Project>{ee434706-b085-4c6a-8196-171e528b170e}</Project>
+      <Name>HA.COSMOS.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Mongo.DAL\HA.COSMOS.Mongo.DAL.csproj">
+      <Project>{9f4fb849-b5c6-4cf6-8bd9-f6c01a953d7f}</Project>
+      <Name>HA.COSMOS.Mongo.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Services\HA.COSMOS.Services.csproj">
+      <Project>{d85448f0-2c68-472d-b6d5-e098460e6838}</Project>
+      <Name>HA.COSMOS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.ValueObjects\HA.COSMOS.ValueObjects.csproj">
+      <Project>{ee7f8213-6441-4ab8-b1ed-f652c907676c}</Project>
+      <Name>HA.COSMOS.ValueObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Worker.MessageHandlers\HA.COSMOS.Worker.MessageHandlers.csproj">
+      <Project>{35912394-cac0-4170-9439-2b1b910c92fc}</Project>
+      <Name>HA.COSMOS.Worker.MessageHandlers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

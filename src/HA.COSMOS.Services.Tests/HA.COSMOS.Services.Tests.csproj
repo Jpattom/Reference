@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0397769E-8DF5-4795-8607-87242A7E534A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HA.COSMOS.Services.Tests</RootNamespace>
+    <AssemblyName>HA.COSMOS.Services.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="UserServicesTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HA.COSMOS.Contracts\HA.COSMOS.Contracts.csproj">
+      <Project>{d0199f92-c6d6-4456-832d-c50e71be5c16}</Project>
+      <Name>HA.COSMOS.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.DAContracts\HA.COSMOS.DAContracts.csproj">
+      <Project>{f598de54-e531-44ca-81e9-c092c80bca1c}</Project>
+      <Name>HA.COSMOS.DAContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Entities\HA.COSMOS.Entities.csproj">
+      <Project>{ceca89ca-cd62-42bf-8050-9feede9e6e5c}</Project>
+      <Name>HA.COSMOS.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.Services\HA.COSMOS.Services.csproj">
+      <Project>{d85448f0-2c68-472d-b6d5-e098460e6838}</Project>
+      <Name>HA.COSMOS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HA.COSMOS.ValueObjects\HA.COSMOS.ValueObjects.csproj">
+      <Project>{ee7f8213-6441-4ab8-b1ed-f652c907676c}</Project>
+      <Name>HA.COSMOS.ValueObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\tools\nunit\framework\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\tools\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="HA.Common">
+      <HintPath>..\..\build\Framework\HA.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
