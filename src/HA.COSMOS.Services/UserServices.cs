@@ -75,7 +75,7 @@ namespace HA.COSMOS.Services
                     {
                         if (user.PasswordExpiryDateUTC < DateTime.UtcNow)
                         {
-                           // throw new UserPasswordExpired();
+                            throw new UserPasswordExpired();
                         }
                         var userContext = new COSMOSUSerContext();
                         userContext.UserName = user.UserName;

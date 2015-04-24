@@ -12,7 +12,7 @@ namespace HA.COSMOS.Mongo.DAL
 {
     public class UserDataAccessLayer : IUserDataAccessLayer
     {
-        private MongoCollection<User> rmacUsers;
+        private MongoCollection<User> cosmosUsers;
         private ILog logger = LogManager.GetLogger(typeof(UserDataAccessLayer));
         public UserDataAccessLayer()
         {
@@ -20,8 +20,8 @@ namespace HA.COSMOS.Mongo.DAL
             {
                 var dbManager = MongoDBManager.GetInstane();
                 var mongoDataBase = dbManager.COSMOSDataBase;
-                rmacUsers = mongoDataBase.GetCollection<User>("RMACUsers");
-                rmacUsers.EnsureIndex("UserName", "Email");
+                cosmosUsers = mongoDataBase.GetCollection<User>("COSMOSUsers");
+                cosmosUsers.EnsureIndex("UserName", "Email");
             }
             catch (Exception ex)
             {
@@ -37,7 +37,7 @@ namespace HA.COSMOS.Mongo.DAL
             try
             {
                 var rmacuser = new User { UserName = userName, Password = password, Email = email, PasswordExpiryDateUTC = passwordExpiryDate, LoginTimeUTC = null };
-                var insertResult = rmacUsers.Insert<User>(rmacuser);
+                var insertResult = cosmosUsers.Insert<User>(rmacuser);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace HA.COSMOS.Mongo.DAL
             var result = false;
             try
             {
-                rmacUsers.Insert(user);
+                cosmosUsers.Insert(user);
                 result = true;
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace HA.COSMOS.Mongo.DAL
             try
             {
                 var query = Query<User>.EQ(user => user.UserName, userName);
-                var rmacUserAlls = rmacUsers.FindAs<User>(query);
+                var rmacUserAlls = cosmosUsers.FindAs<User>(query);
                 foreach (User rmacUser in rmacUserAlls)
                 {
                     if (rmacUser.UserName.Equals(userName))
@@ -91,7 +91,7 @@ namespace HA.COSMOS.Mongo.DAL
             try
             {
                 List<User> results = new List<User>();
-                foreach (User user in rmacUsers.FindAllAs<User>())
+                foreach (User user in cosmosUsers.FindAllAs<User>())
                 {
                     results.Add(user);
                 }
@@ -122,7 +122,7 @@ namespace HA.COSMOS.Mongo.DAL
                     var update = Update<User>.Set(key, value);
                     updates.Add(update);
                 }
-                var updateResult = rmacUsers.Update(selectQuery, Update.Combine(updates.ToArray()));
+                var updateResult = cosmosUsers.Update(selectQuery, Update.Combine(updates.ToArray()));
                 result = updateResult.Ok;
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace HA.COSMOS.Mongo.DAL
                 throw new ArgumentException("UserName Cannot empty to update or insert user");
             try
             {
-                var result = rmacUsers.Save<User>(user);
+                var result = cosmosUsers.Save<User>(user);
                 return result.Ok;
             }
             catch (Exception ex)
@@ -155,7 +155,7 @@ namespace HA.COSMOS.Mongo.DAL
         {
             List<User> results = new List<User>();
             var query = Query<User>.Where(comaparisonExpression);
-            foreach (User user in rmacUsers.FindAs<User>(query))
+            foreach (User user in cosmosUsers.FindAs<User>(query))
             {
                 results.Add(user);
             }

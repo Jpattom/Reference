@@ -42,7 +42,7 @@ namespace HA.COSMOS.Mongo.DAL
             var connectionString = "mongodb://localhost";
             var client = new MongoClient(connectionString);
             var server = client.GetServer();
-            rmacDataBase = server.GetDatabase("rmac");
+            rmacDataBase = server.GetDatabase("COSMOS");
             ConfigureBSONClassMapp();
         }
 
