@@ -9,7 +9,7 @@ Prerequisite
      
 Steps to build and execute
 
-1) Clone the Repository 
+1) Clone the Repository to Reference
 
 2) Open Reference/Src/Framework.sln and build
 
@@ -17,6 +17,18 @@ Steps to build and execute
 
 4) Open Reference/Src/COSMOS.sln and build
 
-5) Execute the following from the folder Reference after MongoDB is started from the Mogodb localhost usimg Command Prompt or Powershell
-     mongo.exe tools\database\MongoDB\data\stageload.j
+5) Execute the following from the folder Reference after MongoDB is started from the Mogodb localhost using Command Prompt or Powershell
+
+
+     mongo.exe tools\database\MongoDB\data\stageload.js
+     
+     
+6)
+
+ Debug\Start new instance of HA.COSMOS.Worker in COSMOS.sln
+ 
+ Debug\Start new instance of HA.COSMOS.WebApi in COSMOS.sln
+ 
+ Debug\Start new instance of COSMOSClientConsole in COSMOS.sln
+ 
  
