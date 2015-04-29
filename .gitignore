@@ -7,6 +7,7 @@
 [Bb]in/
 [Oo]bj/
 [Bb]uild/
+[Ll]icense
 
 # mstest test results
 TestResults
