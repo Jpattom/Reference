@@ -47,9 +47,6 @@
     <Reference Include="HA.Wcf.Services">
       <HintPath>..\..\build\Framework\HA.Wcf.Services.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
