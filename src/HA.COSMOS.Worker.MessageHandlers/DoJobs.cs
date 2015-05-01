@@ -41,9 +41,10 @@ namespace HA.COSMOS.MessageHandlers
 
         }
 
-        public override void ConfigureHowToFindSaga()
+       
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
         {
-            ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
+            mapper.ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
         }
     }
 
@@ -58,9 +59,9 @@ namespace HA.COSMOS.MessageHandlers
             
         }
 
-        public override void ConfigureHowToFindSaga()
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
         {
-            ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
+            mapper.ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
         }
     }
 
@@ -74,9 +75,9 @@ namespace HA.COSMOS.MessageHandlers
             this.Data.SagaResults[3] = string.Format("Result of {0} at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
         }
 
-        public override void ConfigureHowToFindSaga()
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
         {
-            ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
+            mapper.ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
         }
     }
 
@@ -90,9 +91,9 @@ namespace HA.COSMOS.MessageHandlers
             this.Data.SagaResults[4] = string.Format("Result of {0} at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
         }
 
-        public override void ConfigureHowToFindSaga()
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
         {
-            ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
+            mapper.ConfigureMapping<DoJob>(m => m.ProcessId).ToSaga(s => s.ProcessId);
         }
     }
 }

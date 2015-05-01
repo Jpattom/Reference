@@ -63,7 +63,7 @@ namespace HA.COSMOS.Worker.MessageHandlers.Tests
              {
                  asmbliesToadd.Add(enums.Current);
              }
-             Test.Initialize(asmbliesToadd.ToArray());
+            // Test.Initialize(Configure asmbliesToadd.ToArray());
 
              var vo = new UserPasswordResetVO();
              vo.UserName = "Thommu";

@@ -7,19 +7,28 @@ using HA.WCF.Messages;
 using HA.WCF.Services;
 using System;
 using System.ServiceModel;
+using NServiceBus.Features;
 
 namespace HA.WCF.COSMOS
 {
     /// <summary>
     /// Class Responsible for COSMOS Wcf end point configuaration
     /// </summary>
-    public class EndpointConfig : IConfigureThisEndpoint, AsA_Client, IWantCustomInitialization
+    public class EndpointConfig : IConfigureThisEndpoint, INeedInitialization
     {
         public void Init()
         {
-            NServiceBus.Configure.With()
-                .DefaultBuilder()
-                .BinarySerializer();
+
+        }
+
+        public void Customize(BusConfiguration configuration)
+        {
+            configuration.PurgeOnStartup(true);
+            configuration.Transactions().Disable();
+            configuration.DisableFeature<SecondLevelRetries>();
+            configuration.DisableFeature<StorageDrivenPublishing>();
+            configuration.DisableFeature<TimeoutManager>();
+            configuration.UseSerialization(typeof(BinarySerializer));
         }
     }
 
@@ -36,7 +45,7 @@ namespace HA.WCF.COSMOS
         {
             try
             {
-                svcHost = new ServiceHost(typeof(BaseService));  
+                svcHost = new ServiceHost(typeof(BaseService));
                 svcHost.Open();
                 Console.WriteLine("RAC service is running... ");
             }

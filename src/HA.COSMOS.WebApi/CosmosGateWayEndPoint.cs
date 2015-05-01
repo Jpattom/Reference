@@ -65,13 +65,14 @@ namespace HA.COSMOS.WebApi
     /// <summary>
     /// Class Responsible for COSMOS WebApi end point configuaration
     /// </summary>
-    public class EndpointConfig : IConfigureThisEndpoint, AsA_Client, IWantCustomInitialization
+    public class EndpointConfig : IConfigureThisEndpoint, AsA_Client, INeedInitialization
     {
-        public void Init()
+       
+          
+
+        public void Customize(BusConfiguration configuration)
         {
-            NServiceBus.Configure.With()
-                .DefaultBuilder()
-                .BinarySerializer();
+           configuration.UseSerialization(typeof(BinarySerializer));
         }
     }
 

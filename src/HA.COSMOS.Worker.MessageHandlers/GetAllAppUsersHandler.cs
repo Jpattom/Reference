@@ -11,7 +11,7 @@ namespace HA.COSMOS.MessageHandlers
     public class GetAllAppUsersHandler : IHandleMessages<GetAllAppUsers>
     {
         public IUserServices UserServices { get; set; }
-
+        public IBus Bus { get; set; }
         public void Handle(GetAllAppUsers message)
         {
             if (UserServices == null)
@@ -22,20 +22,18 @@ namespace HA.COSMOS.MessageHandlers
             try
             {
                 var users = UserServices.GetAllAppUsers(message.UserContext);
-                var reply = this.Bus().CreateInstance<ReplyMessage>(m =>
-                {
+                var reply = new ReplyMessage();
+                ProcessContextUtil.AssignTo(reply.ProcessContext, message.ProcessContext);
 
-                    ProcessContextUtil.AssignTo(m.ProcessContext, message.ProcessContext);
-                    m.AssignFrom(message);
-                    m.SecurityToken = Guid.NewGuid().ToString();
-                    m.SetServiceParams(users);
-                   
-                });
-                this.Bus().Reply(reply);
+                reply.AssignFrom(message);
+                reply.SecurityToken = message.SecurityToken;
+                reply.SetServiceParams(users);
+
+                this.Bus.Reply(reply);
             }
             catch (UserServiceException ex)
             {
-                this.Bus().Return(ex.ErrorNumber);
+                this.Bus.Return(ex.ErrorNumber);
             }
         }
     }

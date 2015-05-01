@@ -10,5 +10,10 @@ namespace HA.COSMOS.MessageHandlers
         {
           
         }
+
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<EventSubscriptionSagaData> mapper)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

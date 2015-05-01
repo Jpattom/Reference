@@ -31,10 +31,7 @@ namespace HA.COSMOS.MessageHandlers
             Bus.Return(ReplyCodes.Sucess);
         }
         
-        public override void ConfigureHowToFindSaga()
-        {
-            ConfigureMapping<EndSaga1>(m => m.ProcessId).ToSaga(data => data.ProcessId);
-        }
+       
       
         public void Timeout(EndSaga1 state)
         {
@@ -60,6 +57,12 @@ namespace HA.COSMOS.MessageHandlers
                 }
             }
            // 
+        }
+
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
+        {
+
+            mapper.ConfigureMapping<EndSaga1>(m => m.ProcessId).ToSaga(data => data.ProcessId);
         }
     }
 }

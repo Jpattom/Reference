@@ -11,6 +11,7 @@ namespace HA.COSMOS.Worker.MessageHandlers
     public class LoginHandler : IHandleMessages<Login>
     {
         public IUserServices UserServices { get; set; }
+        IBus Bus { get; set; }
         public void Handle(Login message)
         {
             if (message.LoginVO != null)
@@ -23,29 +24,28 @@ namespace HA.COSMOS.Worker.MessageHandlers
                 try
                 {
                     var userContext = UserServices.Login(message.LoginVO);
-                    var reply = this.Bus().CreateInstance<ReplyMessage>(m =>
-                    {
-                        ProcessContextUtil.AssignTo(m.ProcessContext, message.ProcessContext);
-                        m.AssignFrom(message);
-                        m.SecurityToken = userContext.SecurityToken;
-                        m.UserContext = userContext;
-                    });
-                    this.Bus().Return(ReplyCodes.Sucess);
+                    var reply = new ReplyMessage();
+                    reply.AssignFrom(message);
+                    ProcessContextUtil.AssignTo(reply.ProcessContext, message.ProcessContext);
+                    reply.SecurityToken = userContext.SecurityToken;
+                    reply.UserContext = userContext;
+
+                    this.Bus.Return(ReplyCodes.Sucess);
                     //this.Bus().Publish(reply);
-                    this.Bus().Reply(reply);
+                    this.Bus.Reply(reply);
                 }
                 catch (UserServiceException ex)
                 {
-                    this.Bus().Return(ex.ErrorNumber);
+                    this.Bus.Return(ex.ErrorNumber);
                 }
                 catch (Exception)
                 {
-                    this.Bus().Return(ReplyCodes.Error);
+                    this.Bus.Return(ReplyCodes.Error);
                 }
             }
             else
             {
-                this.Bus().Return(ReplyCodes.Error);
+                this.Bus.Return(ReplyCodes.Error);
             }
         }
     }

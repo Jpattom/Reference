@@ -66,14 +66,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NServiceBus">
-      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.dll</HintPath>
-    </Reference>
     <Reference Include="HA.Common">
       <HintPath>..\..\build\Framework\HA.Common.dll</HintPath>
     </Reference>
     <Reference Include="HA.Contracts">
       <HintPath>..\..\build\Framework\HA.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.2.0\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +87,9 @@
       <Project>{ee434706-b085-4c6a-8196-171e528b170e}</Project>
       <Name>HA.COSMOS.Messages</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

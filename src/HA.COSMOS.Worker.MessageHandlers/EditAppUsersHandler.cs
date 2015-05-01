@@ -11,6 +11,9 @@ namespace HA.COSMOS.MessageHandlers
     {
         public IUserServices UserServices{get; set;}
 
+        public IBus Bus { get; set; }
+
+        
         public void Handle(EditAppUsers message)
         {
             ServiceBuilder sb = ServiceBuilder.GetInstance();
@@ -20,17 +23,23 @@ namespace HA.COSMOS.MessageHandlers
             {
                 var editUserVO = message.MessagesVo;
                 var result = UserServices.EditAppUser(editUserVO, message.UserContext);
-                var reply = this.Bus().CreateInstance<ReplyMessage>(m =>
+                var reply = new ReplyMessage
                 {
-                    ProcessContextUtil.AssignTo(m.ProcessContext, message.ProcessContext);
-                    m.AssignFrom(message);
-                });
-                this.Bus().Reply(reply);
+                    SecurityToken = message.SecurityToken,
+                    UserContext = message.UserContext,
+                    ProcessContext = message.ProcessContext
+
+                };
+
+                ProcessContextUtil.AssignTo(reply.ProcessContext, message.ProcessContext);
+                reply.AssignFrom(message);
+                this.Bus.Return(ReplyCodes.Sucess);
+                this.Bus.Reply(reply);
 
             }
             catch (UserServiceException ex)
             {
-                this.Bus().Return(ex.ErrorNumber);
+                this.Bus.Return(ex.ErrorNumber);
             }
         }
     }

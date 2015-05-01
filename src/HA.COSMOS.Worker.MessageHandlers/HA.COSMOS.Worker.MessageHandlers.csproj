@@ -70,14 +70,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus">
-      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus.Core">
-      <HintPath>..\..\ThirdParty\NServiceBus\v4.6.1\Binaries\NServiceBus.Core.dll</HintPath>
-    </Reference>
     <Reference Include="HA.Common">
       <HintPath>..\..\build\Framework\HA.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.2.0\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -109,6 +106,9 @@
       <Project>{ee7f8213-6441-4ab8-b1ed-f652c907676c}</Project>
       <Name>HA.COSMOS.ValueObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
