@@ -28,7 +28,6 @@ namespace HA.COSMOS.Worker
 
     public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops
     {
-        public IBus Bus { get; set; }
         public void Start()
         {
             ServiceBuilder serviceBuilder = ServiceBuilder.GetInstance();
