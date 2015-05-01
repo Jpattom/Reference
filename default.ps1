@@ -59,7 +59,9 @@ task CreateArtifacts -depends Compile -description "Creates build Artefacts" {
 	Copy-Item $outDir\COSMOS\MongoDB.Driver.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\Newtonsoft.Json.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\NServiceBus.Core.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\NServiceBus.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\NServiceBus.RavenDB.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\Raven.Abstractions.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
+	Copy-Item $outDir\COSMOS\Raven.Client.Lightweight.dll $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\NServiceBus.Host.exe $currentArtifatcs\COSMOS_Worker -Force -Exclude **.Tests.*
 			
 	mkdir "$currentArtifatcs\COSMOS_Service"
@@ -73,10 +75,8 @@ task CreateArtifacts -depends Compile -description "Creates build Artefacts" {
 	Copy-Item $outDir\COSMOS\HA.COSMOS.WebApi.dll.config $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\HA.Wcf.Messages.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\HA.Wcf.Services.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\log4net.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\Newtonsoft.Json.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\NServiceBus.Core.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
-	Copy-Item $outDir\COSMOS\NServiceBus.dll $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 	Copy-Item $outDir\COSMOS\NServiceBus.Host.exe $currentArtifatcs\COSMOS_Service -Force -Exclude **.Tests.*
 
 	mkdir "$currentArtifatcs\COSMOS_Client"
