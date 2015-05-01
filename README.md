@@ -2,7 +2,7 @@
 
 Prerequisite 
 
- 1) NserviceBus 4.x (only to have RavenDB the dlls pushed in the repo, this will be changed to get from nuget) 
+ 1) RavenDB-Build-2956 not more than this or less
 
  2) Mongodb running on localhost where worker is deployed
  
@@ -13,7 +13,7 @@ Steps to build and execute
 
 2) Open Reference/Src/Framework.sln and build
 
-3) Open powershell navigate to Reference and execute build.ps1
+3) Open powershell navigate to Reference and execute build.ps1 (May end up in some errors but continue to next step)
 
 4) Open Reference/Src/COSMOS.sln and build
 
