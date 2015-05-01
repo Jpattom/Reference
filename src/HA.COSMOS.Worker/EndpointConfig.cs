@@ -6,6 +6,7 @@ using NServiceBus.Config;
 using HA.Common;
 using HA.COSMOS.Messages;
 using HA.COSMOS.MessageHandlers;
+using NServiceBus.Persistence;
 
 namespace HA.COSMOS.Worker
 {
@@ -20,6 +21,7 @@ namespace HA.COSMOS.Worker
 
         public void Customize(BusConfiguration configuration)
         {
+            configuration.UsePersistence<RavenDBPersistence>();
             configuration.UseSerialization(typeof(BinarySerializer));
         }
     }

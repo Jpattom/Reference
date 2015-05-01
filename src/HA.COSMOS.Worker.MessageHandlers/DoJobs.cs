@@ -23,10 +23,20 @@ namespace HA.COSMOS.MessageHandlers
 
     public class DoWhenSaga1Start : IHandleMessages<NotifySaga1Started>
     {
-        public IBus Bus { get; set; }
+        private IBus bus { get; set; }
+
+        public DoWhenSaga1Start()
+        {
+        }
+
+        public DoWhenSaga1Start(IBus bus)
+        {
+            this.bus = bus;
+        }
+
         public void Handle(NotifySaga1Started message)
         {
-            Bus.SendLocal(new DoJob(message));
+            bus.SendLocal(new DoJob(message));
         }
     }
 

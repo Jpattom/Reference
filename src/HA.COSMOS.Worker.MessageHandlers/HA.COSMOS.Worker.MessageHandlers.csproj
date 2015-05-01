@@ -84,8 +84,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EditAppUsersHandler.cs" />
-    <Compile Include="EventSubscriptionSaga.cs" />
-    <Compile Include="EventSubscriptionSagaData.cs" />
     <Compile Include="GetAllAppUsersHandler.cs" />
     <Compile Include="GetUserReportHandler.cs" />
     <Compile Include="LoginHandler.cs" />

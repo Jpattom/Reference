@@ -21,7 +21,7 @@ namespace HA.COSMOS.Mongo.DAL
                 var dbManager = MongoDBManager.GetInstane();
                 var mongoDataBase = dbManager.COSMOSDataBase;
                 cosmosUsers = mongoDataBase.GetCollection<User>("COSMOSUsers");
-                cosmosUsers.EnsureIndex("UserName", "Email");
+                cosmosUsers.CreateIndex("UserName", "Email");
             }
             catch (Exception ex)
             {
@@ -123,7 +123,7 @@ namespace HA.COSMOS.Mongo.DAL
                     updates.Add(update);
                 }
                 var updateResult = cosmosUsers.Update(selectQuery, Update.Combine(updates.ToArray()));
-                result = updateResult.Ok;
+                result = updateResult.Response.AsBoolean;
             }
             catch (Exception ex)
             {
@@ -143,7 +143,7 @@ namespace HA.COSMOS.Mongo.DAL
             try
             {
                 var result = cosmosUsers.Save<User>(user);
-                return result.Ok;
+                return result.Response.AsBoolean;
             }
             catch (Exception ex)
             {

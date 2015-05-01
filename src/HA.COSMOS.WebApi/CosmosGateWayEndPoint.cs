@@ -4,6 +4,7 @@ using HA.Common;
 using HA.Contracts;
 using HA.COSMOS.ValueObjects;
 using NServiceBus;
+using NServiceBus.Features;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -67,12 +68,16 @@ namespace HA.COSMOS.WebApi
     /// </summary>
     public class EndpointConfig : IConfigureThisEndpoint, AsA_Client, INeedInitialization
     {
-       
-          
 
         public void Customize(BusConfiguration configuration)
         {
-           configuration.UseSerialization(typeof(BinarySerializer));
+            configuration.PurgeOnStartup(true);
+            configuration.Transactions().Disable();
+            configuration.DisableFeature<SecondLevelRetries>();
+            configuration.DisableFeature<StorageDrivenPublishing>();
+            configuration.DisableFeature<TimeoutManager>();
+            configuration.UsePersistence<InMemoryPersistence>();
+            configuration.UseSerialization(typeof(BinarySerializer));
         }
     }
 

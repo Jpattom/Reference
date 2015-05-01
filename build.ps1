@@ -19,7 +19,7 @@ param(
 )
 
 Import-Module .\tools\psake\psake.psm1
-git clean -Xdf
+#git clean -Xdf
 foreach ($buildPlatform in $buildPlatforms)  
 { 
 	Invoke-psake .\default.ps1  -properties @{ProductVersion="$majorVersion.$minorVersion";PatchVersion=$patchNumber;BuildNumber=$buildNumber;PreRelease=$preRelease;Platform=$buildPlatform;buildConfiguration='Release'} -framework '4.0'

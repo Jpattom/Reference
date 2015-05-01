@@ -11,7 +11,16 @@ namespace HA.COSMOS.MessageHandlers
     {
         public IUserServices UserServices{get; set;}
 
-        public IBus Bus { get; set; }
+        public EditAppUsersHandler()
+        {
+        }
+
+        public EditAppUsersHandler(IBus bus)
+        {
+            this.bus = bus;
+        }
+
+        private IBus bus { get; set; }
 
         
         public void Handle(EditAppUsers message)
@@ -33,13 +42,13 @@ namespace HA.COSMOS.MessageHandlers
 
                 ProcessContextUtil.AssignTo(reply.ProcessContext, message.ProcessContext);
                 reply.AssignFrom(message);
-                this.Bus.Return(ReplyCodes.Sucess);
-                this.Bus.Reply(reply);
+                this.bus.Return(ReplyCodes.Sucess);
+                this.bus.Reply(reply);
 
             }
             catch (UserServiceException ex)
             {
-                this.Bus.Return(ex.ErrorNumber);
+                this.bus.Return(ex.ErrorNumber);
             }
         }
     }

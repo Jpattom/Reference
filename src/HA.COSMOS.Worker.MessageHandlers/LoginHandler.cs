@@ -10,10 +10,23 @@ namespace HA.COSMOS.Worker.MessageHandlers
 {
     public class LoginHandler : IHandleMessages<Login>
     {
+        private IBus bus { get; set; }
+
+        public LoginHandler()
+        {
+            
+        }
+
+        public LoginHandler(IBus bus)
+        {
+            this.bus = bus;
+        }
+
         public IUserServices UserServices { get; set; }
-        IBus Bus { get; set; }
+
         public void Handle(Login message)
         {
+
             if (message.LoginVO != null)
             {
                 if (UserServices == null)
@@ -30,23 +43,25 @@ namespace HA.COSMOS.Worker.MessageHandlers
                     reply.SecurityToken = userContext.SecurityToken;
                     reply.UserContext = userContext;
 
-                    this.Bus.Return(ReplyCodes.Sucess);
+                    this.bus.Return(ReplyCodes.Sucess);
                     //this.Bus().Publish(reply);
-                    this.Bus.Reply(reply);
+                    this.bus.Reply(reply);
                 }
                 catch (UserServiceException ex)
                 {
-                    this.Bus.Return(ex.ErrorNumber);
+                    this.bus.Return(ex.ErrorNumber);
                 }
                 catch (Exception)
                 {
-                    this.Bus.Return(ReplyCodes.Error);
+                    this.bus.Return(ReplyCodes.Error);
                 }
             }
             else
             {
-                this.Bus.Return(ReplyCodes.Error);
+                this.bus.Return(ReplyCodes.Error);
             }
         }
+
+
     }
 }

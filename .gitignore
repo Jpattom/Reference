@@ -8,7 +8,7 @@
 [Oo]bj/
 [Bb]uild/
 [Ll]icense
-
+[Dd]atabase/
 # mstest test results
 TestResults
 *TestResult.xml

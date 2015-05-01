@@ -11,7 +11,18 @@ namespace HA.COSMOS.MessageHandlers
     public class GetAllAppUsersHandler : IHandleMessages<GetAllAppUsers>
     {
         public IUserServices UserServices { get; set; }
-        public IBus Bus { get; set; }
+
+        private IBus bus { get; set; }
+
+        public GetAllAppUsersHandler()
+        {
+        }
+
+        public GetAllAppUsersHandler(IBus bus)
+        {
+            this.bus = bus;
+        }
+
         public void Handle(GetAllAppUsers message)
         {
             if (UserServices == null)
@@ -29,11 +40,11 @@ namespace HA.COSMOS.MessageHandlers
                 reply.SecurityToken = message.SecurityToken;
                 reply.SetServiceParams(users);
 
-                this.Bus.Reply(reply);
+                this.bus.Reply(reply);
             }
             catch (UserServiceException ex)
             {
-                this.Bus.Return(ex.ErrorNumber);
+                this.bus.Return(ex.ErrorNumber);
             }
         }
     }

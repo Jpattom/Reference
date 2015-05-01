@@ -12,7 +12,7 @@ namespace HA.COSMOS.MessageHandlers
 
         public MySagaData()
         {
-            
+
         }
 
         [Unique]
@@ -22,27 +22,15 @@ namespace HA.COSMOS.MessageHandlers
             set;
         }
 
-        public Guid Id
-        {
-            get;
-            set;
-        }
+        public Guid Id { get; set; }
 
-        public string OriginalMessageId
-        {
-            get;
-            set;
-        }
+        public string OriginalMessageId { get; set; }
 
-        public string Originator
-        {
-            get;
-            set;
-        }
+        public string Originator { get; set; }
 
         internal Hashtable SagaResults { get; set; }
 
-        internal int NoOfProcessToBeCompletd { get;  set; }
+        internal int NoOfProcessToBeCompletd { get; set; }
     }
 
 }
