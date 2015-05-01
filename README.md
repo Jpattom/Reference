@@ -6,6 +6,8 @@ Prerequisite
 
  2) Mongodb running on localhost where worker is deployed
  
+ 3) Good to have Posh-Git follow the process in https://github.com/dahlbyk/posh-git 
+ 
      
 Steps to build and execute
 
