@@ -2,11 +2,13 @@
 
 Prerequisite 
 
- 1) RavenDB-Build-2956 not more than this or less (http://hibernatingrhinos.com/downloads/RavenDB%20Installer/2956)
+ 1) Microsoft Visual Studio 2013
 
- 2) Mongodb running on localhost where worker is deployed
+ 2) RavenDB-Build-2956 not more than this or less (http://hibernatingrhinos.com/downloads/RavenDB%20Installer/2956)
+
+ 3) Mongodb running on localhost where worker is deployed
  
- 3) Good to have Posh-Git follow the process in https://github.com/dahlbyk/posh-git 
+ 4) Good to have Posh-Git follow the process in https://github.com/dahlbyk/posh-git 
  
      
 Steps to build and execute
