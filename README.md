@@ -1,6 +1,6 @@
 # Reference
 
-Prerequisite 
+##Prerequisite 
 
  1) Microsoft Visual Studio 2013
 
@@ -11,7 +11,7 @@ Prerequisite
  4) Good to have Posh-Git follow the process in https://github.com/dahlbyk/posh-git 
  
      
-Steps to build and execute
+##Steps to build and execute
 
 1) Clone the Repository to Reference
 
