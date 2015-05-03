@@ -2,7 +2,7 @@
 
 Prerequisite 
 
- 1) RavenDB-Build-2956 not more than this or less
+ 1) RavenDB-Build-2956 not more than this or less (http://hibernatingrhinos.com/downloads/RavenDB%20Installer/2956)
 
  2) Mongodb running on localhost where worker is deployed
  
