@@ -3,10 +3,16 @@
 using HA.Common;
 using HA.Contracts;
 using HA.COSMOS.ValueObjects;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Hosting;
 using NServiceBus;
 using NServiceBus.Features;
+using Owin;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.SelfHost;
 
@@ -91,6 +97,8 @@ namespace HA.COSMOS.WebApi
 
         private HttpSelfHostServer server;
 
+        IDisposable webApp;
+
         public void Start()
         {
             try
@@ -106,6 +114,10 @@ namespace HA.COSMOS.WebApi
                 server = new HttpSelfHostServer(config);
 
                 server.OpenAsync().Wait();
+
+                string url = "http://localhost:5053";
+                webApp = WebApp.Start(url);
+
 
             }
             catch (Exception e)
@@ -126,6 +138,10 @@ namespace HA.COSMOS.WebApi
                 server.CloseAsync();
                 server = null;
             }
+            if (webApp != null)
+                webApp.Dispose();
+            webApp = null;
+
             ServiceEndPoint.MyInstance = null;
         }
 
@@ -145,6 +161,42 @@ namespace HA.COSMOS.WebApi
                 ServiceParams = reply.GetServiceParams(),
                 UserContext = (COSMOSUSerContext)reply.UserContext
             });
+
+            //var clients = GlobalHost.ConnectionManager.GetConnectionContext<WebApiPersistentConnection>();
+            //if (clients != null)
+            //{
+            //    clients.Connection.Send(new ConnectionMessage(reply.ProcessContext.ProcessId.ToString(), new ServiceMessage
+            //    {
+            //        ErrorCode = 0,
+            //        ProcessContext = (ProcessContext)reply.ProcessContext,
+            //        SecurityToken = reply.SecurityToken,
+            //        ServiceParams = reply.GetServiceParams(),
+            //        UserContext = (COSMOSUSerContext)reply.UserContext
+            //    }));
+            //}
+        }
+    }
+
+    class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            app.UseCors(CorsOptions.AllowAll);
+            app.MapSignalR("/signalr/hubs", new HubConfiguration { EnableDetailedErrors=true, EnableJavaScriptProxies=true, EnableJSONP=true });
+        }
+    }
+
+
+    public class WebApiPersistentConnection : Hub
+    {
+        public override Task OnConnected()
+        {
+            return base.OnConnected();
+        }
+
+        public void Send(string name, string message)
+        {
+            Clients.All.addMessage(name, message);
         }
     }
 }
