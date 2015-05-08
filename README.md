@@ -1,19 +1,23 @@
 # Reference
 
-Prerequisite 
+##Prerequisite 
 
- 1) NserviceBus 4.x (only to have RavenDB the dlls pushed in the repo, this will be changed to get from nuget) 
+ 1) Microsoft Visual Studio 2013
 
- 2) Mongodb running on localhost where worker is deployed
+ 2) RavenDB-Build-2956 not more than this or less (http://hibernatingrhinos.com/downloads/RavenDB%20Installer/2956)
+
+ 3) Mongodb running on localhost where worker is deployed
+ 
+ 4) Good to have Posh-Git follow the process in https://github.com/dahlbyk/posh-git 
  
      
-Steps to build and execute
+##Steps to build and execute
 
 1) Clone the Repository to Reference
 
 2) Open Reference/Src/Framework.sln and build
 
-3) Open powershell navigate to Reference and execute build.ps1
+3) Open powershell navigate to Reference and execute build.ps1 (May end up in some errors but continue to next step)
 
 4) Open Reference/Src/COSMOS.sln and build
 
