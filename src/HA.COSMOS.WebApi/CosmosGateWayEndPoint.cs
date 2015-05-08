@@ -182,7 +182,7 @@ namespace HA.COSMOS.WebApi
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR("/signalr/hubs", new HubConfiguration { EnableDetailedErrors=true, EnableJavaScriptProxies=true, EnableJSONP=true });
+            app.MapSignalR();
         }
     }
 
