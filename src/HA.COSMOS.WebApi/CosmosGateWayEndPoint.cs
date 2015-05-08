@@ -162,18 +162,15 @@ namespace HA.COSMOS.WebApi
                 UserContext = (COSMOSUSerContext)reply.UserContext
             });
 
-            //var clients = GlobalHost.ConnectionManager.GetConnectionContext<WebApiPersistentConnection>();
-            //if (clients != null)
-            //{
-            //    clients.Connection.Send(new ConnectionMessage(reply.ProcessContext.ProcessId.ToString(), new ServiceMessage
-            //    {
-            //        ErrorCode = 0,
-            //        ProcessContext = (ProcessContext)reply.ProcessContext,
-            //        SecurityToken = reply.SecurityToken,
-            //        ServiceParams = reply.GetServiceParams(),
-            //        UserContext = (COSMOSUSerContext)reply.UserContext
-            //    }));
-            //}
+            var clients = GlobalHost.ConnectionManager.GetHubContext<WebApiPersistentConnection>();
+            //clients.Clients.All.addMessage("Jobstatus", reply.ProcessContext.ProcessId.ToString());
+
+
+            if (clients != null)
+            {
+                clients.Clients.Client(reply.ProcessContext.ProcessId.ToString()).addMessage(reply.ProcessContext.ProcessId.ToString(), reply.ProcessContext.ProcessId.ToString());
+
+            }
         }
     }
 
@@ -197,6 +194,7 @@ namespace HA.COSMOS.WebApi
         public void Send(string name, string message)
         {
             Clients.All.addMessage(name, message);
+            //Clients.Client()
         }
     }
 }
