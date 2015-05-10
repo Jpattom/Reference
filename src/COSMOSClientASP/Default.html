@@ -13,21 +13,23 @@
 </head>
 <body>
     <div class="container">
-        <table>
-            <tr>
-                <td><label for="username">User Name:</label></td>
-                <td><input type="text" id="username" /></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" id="password" /></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="button" id="login" value="Login" /></td>
-            </tr>
-
-        </table>
+        <div id="loginContainer">
+            <table>
+                <tr>
+                    <td><label for="username">User Name:</label></td>
+                    <td><input type="text" id="username" /></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" id="password" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><input type="submit" id="login" value="Login" /></td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" id="submitJob" value="Submit Jobs" />
         <ul id="discussion"></ul>
     </div>
     <!--Script references. -->
@@ -40,6 +42,9 @@
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
         $(function () {
+            $('#username').keyup(doCheck).focusout(doCheck);
+            $('#login').prop('disabled', true);
+            $('#submitJob').prop('disabled', true);
             //Set the hubs URL for the connection
             $.connection.hub.url = "http://localhost:5053/signalr";
 
@@ -47,25 +52,38 @@
             var chat = $.connection.webApiPersistentConnection;
 
             // Create a function that the hub can call to broadcast messages.
-            chat.client.addMessage = function (name, message) {
+            chat.client.reply = function (serviceMessage) {
                 // Html encode display name and message.
-                var encodedName = $('<div />').text(name).html();
-                var encodedMsg = $('<div />').text(message).html();
-                // Add the message to the page.
-                $('#discussion').append('<li><strong>' + encodedName
-                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+
+                if (serviceMessage.ProcessContext.ProcessType == 'Login') {
+                    if (serviceMessage.UserContext != null) {
+                        $('#discussion').append('<li>Login Sucessful for <strong>' + serviceMessage.UserContext.UserName + '</strong> Security Token: ' + serviceMessage.UserContext.SecurityToken + '</li>');
+                        userContext = serviceMessage.UserContext;
+                    }
+                }
+
+                if (serviceMessage.ProcessContext.ProcessType == 'DoJob') {
+                    if (serviceMessage.ServiceParams != null) {
+
+                        for (i = 0; i < serviceMessage.ServiceParams.length; i++) {
+                            $('#discussion').append('<li><strong>' + serviceMessage.ServiceParams[i] + '</li>');
+                        }
+
+                    }
+                }
             };
 
 
             $('#username').focus();
+            var userContext;
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $('#login').click(function () {
                     var connectionId = $.connection.hub.id;
                     jQuery.support.cors = true;
                     var loginVo = {
-                        UserName:'Admin',
-                        Password: 'p@ssw0rd'
+                        UserName: $('#username').val(),
+                        Password: $('#password').val()
 
                     };
 
@@ -90,12 +108,55 @@
                         type: 'POST',
                         data: JSON.stringify(serviceMessage),
                         contentType: "application/json;charset=utf-8",
-                        success: function (data) {
-                            WriteResponse(data);
+                        success: function (returnData) {
+                            WriteResponse(returnData, 'Login');
                         },
                         error: function (x, y, z) {
                             alert(x + '\n' + y + '\n' + z);
+                        },
+                        done: function (param) {
+                            WriteResponse(param)
                         }
+
+                    });
+                });
+
+                $('#submitJob').click(function () {
+                    var connectionId = $.connection.hub.id;
+                    jQuery.support.cors = true;
+                   
+
+                    var processContext = {
+
+                        ProcessId: connectionId,
+                        ProcessType: 'DoJob',
+                        TotalNumberOfMessages: 1,
+                        MessageNumber: 1,
+                        IsLastMessage: true
+
+                    };
+
+                    var serviceParams = ['"Some Text for Job', 'Second text for Job'];
+                    var serviceMessage = {
+                        ServiceParams: serviceParams,
+                        ProcessContext: processContext
+                    };
+
+                    $.ajax({
+                        url: 'http://localhost:5052/api/COSMOS',
+                        type: 'POST',
+                        data: JSON.stringify(serviceMessage),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (returnData) {
+                            WriteResponse(returnData, 'DoJob');
+                        },
+                        error: function (x, y, z) {
+                            alert(x + '\n' + y + '\n' + z);
+                        },
+                        done: function (param) {
+                            WriteResponse(param)
+                        }
+
                     });
                 });
             }).fail(function (reason) {
@@ -103,11 +164,56 @@
             });
         });
 
-        function WriteResponse(data)
-        {
-            $('#discussion').append('<li><strong>' +
-                    + '</strong>:&nbsp;&nbsp;' + data + '</li>');
+        function WriteResponse(data, processType) {
+            switch (processType) {
+                case 'Login':
+                    switch (data) {
+                        case 1:
+                            $('#discussion').append('<li>Call Sucessful </li>');
+                            $('#login').prop('disabled', true);
+                            $('#username').prop('disabled', true);
+                            $('#password').prop('disabled', true);
+                            $('#submitJob').prop('disabled', false);
+                            break;
+                        case 1003:
+                            $('#discussion').append('<li>User name or password incorrect</li>');
+                            break;
+                        case 1006:
+                            $('#discussion').append('<li>Password cannot be null</li>');
+                            break;
+                        default:
+                            $('#discussion').append('<li>' + data + '</li>');
+                            break;
+
+                    }
+                    break;
+                case 'DoJob':
+                    switch (data) {
+                        case 1:
+                            $('#discussion').append('<li>Jobs Submitted Sucessfully </li>');
+                            break;
+                        default:
+                            $('#discussion').append('<li>' + data + '</li>');
+                            break;
+
+                    }
+                    break;
+                
+            }
         }
+
+        function doCheck() {
+            var allFilled = true;
+            $('#username').each(function () {
+                if ($(this).val() == '') {
+                    allFilled = false;
+                    return false;
+                }
+            });
+            $('#login').prop('disabled', !allFilled);
+        }
+
+        
 
     </script>
 </body>
