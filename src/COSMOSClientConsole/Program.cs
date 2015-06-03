@@ -75,8 +75,11 @@ namespace COSMOSClientConsole
                     new MediaTypeWithQualityHeaderValue("application/json"));
                 COSMOSUSerContext userContext = null;
                 LoginVO loginVo = new LoginVO();
-                loginVo.UserName = "Admin";
-                loginVo.Password = "p@ssw0rd";
+                Console.Write("User Name:");
+
+                loginVo.UserName = Console.ReadLine();
+                Console.Write("Password:");
+                loginVo.Password = Console.ReadLine();
                 ServiceMessage wcfmessage = new ServiceMessage();
                 wcfmessage.ServiceParams = new object[] { loginVo };
                 wcfmessage.ProcessContext = ProcessContextUtil.GetContextForNewProcess(ProcessTypes.Login);
@@ -92,7 +95,7 @@ namespace COSMOSClientConsole
                         var serviceResult = GetServiceResult(client, wcfmessage.ProcessContext.ProcessId);
                         if (serviceResult != null)
                             userContext = serviceResult.UserContext;
-                        Console.WriteLine("Press Enter to Continue");
+                        Console.WriteLine("Press Enter to Submit Jobs");
                         Console.ReadLine();
                        
                         if (userContext != null)

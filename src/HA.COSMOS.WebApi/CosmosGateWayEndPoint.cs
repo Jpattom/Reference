@@ -20,7 +20,6 @@ namespace HA.COSMOS.WebApi
 {
     public sealed class ServiceResultStore
     {
-        private static ServiceResultStore myInstance;
 
         private Dictionary<string, ServiceMessage> results;
 
@@ -88,7 +87,7 @@ namespace HA.COSMOS.WebApi
     }
 
 
-    public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops, IServiceRequestProcessor
+    public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops, IServiceRequestProcessor, IDisposable
     {
 
         public static ServiceEndPoint MyInstance { get; private set; }
@@ -173,19 +172,25 @@ namespace HA.COSMOS.WebApi
                             UserContext = (COSMOSUSerContext)reply.UserContext
                         });
                 }
-                else
+                //else
+                //{
+                var serviceResultStore = ServiceResultStore.Instance;
+                serviceResultStore.Add(reply.ProcessContext.ProcessId.ToString(), new ServiceMessage
                 {
-                    var serviceResultStore = ServiceResultStore.Instance;
-                    serviceResultStore.Add(reply.ProcessContext.ProcessId.ToString(), new ServiceMessage
-                    {
-                        ErrorCode = 0,
-                        ProcessContext = (ProcessContext)reply.ProcessContext,
-                        SecurityToken = reply.SecurityToken,
-                        ServiceParams = reply.GetServiceParams(),
-                        UserContext = (COSMOSUSerContext)reply.UserContext
-                    });
-                }
+                    ErrorCode = 0,
+                    ProcessContext = (ProcessContext)reply.ProcessContext,
+                    SecurityToken = reply.SecurityToken,
+                    ServiceParams = reply.GetServiceParams(),
+                    UserContext = (COSMOSUSerContext)reply.UserContext
+                });
+                //}
             }
+        }
+
+        public void Dispose()
+        {
+            if (server != null)
+                server.Dispose();
         }
     }
 

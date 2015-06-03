@@ -35,7 +35,7 @@ namespace HA.WCF.COSMOS
     /// <summary>
     /// Class Responsible for COSMOS Wcf end point processing 
     /// </summary>
-    public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops, IServiceRequestProcessor
+    public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops, IServiceRequestProcessor, IDisposable
     {
         private System.ServiceModel.ServiceHost svcHost;
 
@@ -55,15 +55,19 @@ namespace HA.WCF.COSMOS
             }
             finally
             {
-                Console.WriteLine("Press Enter to Quit");
-                Console.ReadLine();
-                svcHost.Close();
+                
+                
             }
         }
 
         public void Stop()
         {
             Console.WriteLine("Stoping....");
+            if (svcHost != null)
+            {
+                svcHost.Close();
+                svcHost = null;
+            }
         }
 
         public void ProcessServiceRequest(IBaseMessage request)
@@ -99,6 +103,12 @@ namespace HA.WCF.COSMOS
             {
                 callBackContextStore.Remove(reply.ProcessContext.ProcessId);
             }
+        }
+
+        public void Dispose()
+        {
+            if (svcHost != null)
+                svcHost.Close();
         }
     }
 

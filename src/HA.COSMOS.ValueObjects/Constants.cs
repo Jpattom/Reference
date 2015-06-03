@@ -31,7 +31,7 @@ namespace HA.COSMOS.ValueObjects
         public const string DoJob = "DoJob";
     }
 
-    public enum CacheableEntities : uint
+    public enum CacheableEntities : int
     {
         Nothing = 0,
         User = 1

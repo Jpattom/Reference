@@ -7,6 +7,7 @@ using HA.COSMOS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace HA.COSMOS.Mongo.DAL
 {
@@ -70,13 +71,15 @@ namespace HA.COSMOS.Mongo.DAL
         {
             try
             {
-                var query = Query<User>.EQ(user => user.UserName, userName);
+                var query = Query<User>.Matches(user => user.UserName, new BsonRegularExpression(new Regex(userName, RegexOptions.IgnoreCase)));
                 var rmacUserAlls = cosmosUsers.FindAs<User>(query);
+                
                 foreach (User rmacUser in rmacUserAlls)
                 {
-                    if (rmacUser.UserName.Equals(userName))
+                    if (rmacUser.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase))
                         return rmacUser;
                 }
+                
                 return null;
             }
             catch (Exception ex)
@@ -145,9 +148,9 @@ namespace HA.COSMOS.Mongo.DAL
                 var result = cosmosUsers.Save<User>(user);
                 return result.Response.AsBoolean;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace HA.COSMOS.MessageHandlers
 {
-    
+
 
     public class Saga1 : Saga<MySagaData>, IAmStartedByMessages<StartSaga1>,
         IHandleTimeouts<EndSaga1>
@@ -30,38 +30,37 @@ namespace HA.COSMOS.MessageHandlers
             RequestTimeout<EndSaga1>(DateTime.Now.AddSeconds(1), new EndSaga1(message));
             Bus.Return(ReplyCodes.Sucess);
         }
-        
-       
-      
+
+
+
         public void Timeout(EndSaga1 state)
         {
             Console.WriteLine("Checking Satus of {0}", state.ProcessId);
-            ArrayList sagaResultList = new ArrayList();
-           
-            foreach (object obj in Data.SagaResults.Values)
+            if ((Data.SagaResults != null) && (Data.SagaResults.Values != null) && (Data.SagaResults.Values.Count != 0))
             {
-                if (obj == null)
-                {
-                    RequestTimeout<EndSaga1>(DateTime.Now.AddSeconds(1), state);
-                    break;
-                }
-                else
+                ArrayList sagaResultList = new ArrayList();
+                foreach (object obj in Data.SagaResults.Values)
                 {
                     sagaResultList.Add(obj);
                 }
-
                 if (sagaResultList.Count == Data.NoOfProcessToBeCompletd)
                 {
                     ReplyToOriginator(new ReplyMessage(sagaResultList.ToArray(), state.SecurityToken, state.UserContext, state.ProcessContext));
                     MarkAsComplete();
                 }
+                else
+                {
+                    RequestTimeout<EndSaga1>(DateTime.Now.AddSeconds(1), state);
+                }
             }
-           // 
+            else
+            {
+                RequestTimeout<EndSaga1>(DateTime.Now.AddSeconds(1), state);
+            }
         }
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
         {
-
             mapper.ConfigureMapping<EndSaga1>(m => m.ProcessId).ToSaga(data => data.ProcessId);
         }
     }

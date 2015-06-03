@@ -5,28 +5,30 @@ using System;
 
 namespace HA.COSMOS.Contracts
 {
+    [Serializable]
     public class UserServiceException : Exception
     {
         public UserServiceException()
         {
-            errorNumber = 0;
+            _errorNumber = UserServiceErrorNumbers.UserServiceError;
         }
 
-        protected int errorNumber = UserServiceErrorNumbers.UserServiceError;
+        protected int _errorNumber;
         public int ErrorNumber
         {
             get
             {
-                return errorNumber;
+                return _errorNumber;
             }
         }
+
     }
 
     public class UserNameOrPasswordIncorect : UserServiceException 
     {
         public UserNameOrPasswordIncorect()
         {
-            errorNumber = UserServiceErrorNumbers.UserNameOrPasswordIncorect;
+            _errorNumber = UserServiceErrorNumbers.UserNameOrPasswordIncorect;
         }
     }
 
@@ -34,7 +36,7 @@ namespace HA.COSMOS.Contracts
     {
         public UserNameOrPasswordCannotBeEmpty()
         {
-            errorNumber = UserServiceErrorNumbers.UserNameOrPasswordCannotBeEmpty;
+            _errorNumber = UserServiceErrorNumbers.UserNameOrPasswordCannotBeEmpty;
         }
     }
 
@@ -42,7 +44,7 @@ namespace HA.COSMOS.Contracts
     {
         public UserNameOrEmailCannotBeEmpty()
         {
-            errorNumber = UserServiceErrorNumbers.UserNameOrPasswordCannotBeEmpty;
+            _errorNumber = UserServiceErrorNumbers.UserNameOrPasswordCannotBeEmpty;
         }
     }
 
@@ -50,7 +52,7 @@ namespace HA.COSMOS.Contracts
     {
         public UnableToAuthorizeUser()
         {
-            errorNumber = UserServiceErrorNumbers.UnableToAutherizeUser;
+            _errorNumber = UserServiceErrorNumbers.UnableToAutherizeUser;
         }
         public string ActionName { get; private set; }
         public string UserName { get; private set; } 
@@ -58,7 +60,7 @@ namespace HA.COSMOS.Contracts
         {
             ActionName = actionName;
             UserName = userName;
-            errorNumber = UserServiceErrorNumbers.UnableToAutherizeUser;
+            _errorNumber = UserServiceErrorNumbers.UnableToAutherizeUser;
         }
     }
    
@@ -66,7 +68,7 @@ namespace HA.COSMOS.Contracts
     {
         public UserPasswordExpired()
         {
-            errorNumber = UserServiceErrorNumbers.UserPasswordExpired;
+            _errorNumber = UserServiceErrorNumbers.UserPasswordExpired;
         }
     }
 

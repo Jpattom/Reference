@@ -99,7 +99,7 @@ namespace HA.COSMOS.Services
             catch (Exception ex)
             {
                 logger.Error(this, ex);
-                throw ex;
+                throw; 
             }
             finally
             {
