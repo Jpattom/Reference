@@ -51,10 +51,11 @@ namespace HA.COSMOS.Worker.MessageHandlers
                 {
                     this.bus.Return(ex.ErrorNumber);
                 }
-                catch (Exception)
-                {
-                    this.bus.Return(ReplyCodes.Error);
-                }
+                //catch (Exception)
+                //{
+                    
+                //    //this.bus.Return(ReplyCodes.Error);
+                //}
             }
             else
             {

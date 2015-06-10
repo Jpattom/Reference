@@ -85,7 +85,7 @@ namespace HA.COSMOS.Mongo.DAL
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Write(ex);
-                return null;
+                throw;
             }
         }
 
@@ -103,7 +103,7 @@ namespace HA.COSMOS.Mongo.DAL
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Write(ex);
-                return null;
+                throw;
             }
         }
 
@@ -126,12 +126,13 @@ namespace HA.COSMOS.Mongo.DAL
                     updates.Add(update);
                 }
                 var updateResult = cosmosUsers.Update(selectQuery, Update.Combine(updates.ToArray()));
-                result = updateResult.Response.AsBoolean;
+                result = updateResult.UpdatedExisting;
             }
             catch (Exception ex)
             {
                 result = false;
                 System.Diagnostics.Debug.Write(ex);
+                throw;
             }
             return result;
 
@@ -156,13 +157,20 @@ namespace HA.COSMOS.Mongo.DAL
 
         public User[] GetUsers(Expression<Func<User, bool>> comaparisonExpression)
         {
-            List<User> results = new List<User>();
-            var query = Query<User>.Where(comaparisonExpression);
-            foreach (User user in cosmosUsers.FindAs<User>(query))
+            try
             {
-                results.Add(user);
+                List<User> results = new List<User>();
+                var query = Query<User>.Where(comaparisonExpression);
+                foreach (User user in cosmosUsers.FindAs<User>(query))
+                {
+                    results.Add(user);
+                }
+                return results.ToArray();
             }
-            return results.ToArray();
+            catch
+            {
+                throw;
+            }
         }
 
         private static string GetName(Expression exp)

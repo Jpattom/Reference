@@ -57,7 +57,8 @@
 
                 if (serviceMessage.ProcessContext.ProcessType == 'Login') {
                     if (serviceMessage.UserContext != null) {
-                        $('#discussion').append('<li>Login Sucessful for <strong>' + serviceMessage.UserContext.UserName + '</strong> Security Token: ' + serviceMessage.UserContext.SecurityToken + '</li>');
+                        var date = new Date(serviceMessage.UserContext.LastLoginDateTimeUTC);
+                        $('#discussion').append('<li>Login Sucessful for <strong>' + serviceMessage.UserContext.UserName + '</strong> Login Previously on: ' + date.toString() + '</li>');
                         userContext = serviceMessage.UserContext;
                     }
                 }

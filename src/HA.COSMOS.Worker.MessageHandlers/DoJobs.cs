@@ -3,6 +3,7 @@ using NServiceBus;
 using NServiceBus.Saga;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace HA.COSMOS.MessageHandlers
         public void Handle(DoJob message)
         {
             CPUIntensiveFuctions.SlowMeDown(2);
-            this.Data.SagaResults[1] = string.Format("Result of {0} executed at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
+            this.Data.SagaResults[1] = string.Format("Result of {0} executed at {1} in {2}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"), Process.GetCurrentProcess().Id);
 
         }
 
@@ -65,7 +66,7 @@ namespace HA.COSMOS.MessageHandlers
         public void Handle(DoJob message)
         {
             CPUIntensiveFuctions.SlowMeDown(10);
-            this.Data.SagaResults[2] = string.Format("Result of {0} executed at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
+            this.Data.SagaResults[2] = string.Format("Result of {0} executed at {1} in {2}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"), Process.GetCurrentProcess().Id);
             
         }
 
@@ -82,7 +83,7 @@ namespace HA.COSMOS.MessageHandlers
         public void Handle(DoJob message)
         {
             CPUIntensiveFuctions.SlowMeDown(4);
-            this.Data.SagaResults[3] = string.Format("Result of {0} executed at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
+            this.Data.SagaResults[3] = string.Format("Result of {0} executed at {1} in {2}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"), Process.GetCurrentProcess().Id);
         }
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
@@ -98,7 +99,7 @@ namespace HA.COSMOS.MessageHandlers
         public void Handle(DoJob message)
         {
             CPUIntensiveFuctions.SlowMeDown(3);
-            this.Data.SagaResults[4] = string.Format("Result of {0} executed at {1}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"));
+            this.Data.SagaResults[4] = string.Format("Result of {0} executed at {1} in {2}", this.GetType().Name, DateTime.Now.ToString("hh.mm.ss.ffffff"), Process.GetCurrentProcess().Id);
         }
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<MySagaData> mapper)
