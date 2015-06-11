@@ -12,17 +12,8 @@ using System;
 namespace HA.COSMOS.Worker
 {
 
-
-
-    public class EndpointConfig : IConfigureThisEndpoint, INeedInitialization
+    public class EndpointConfig : IConfigureThisEndpoint, AsA_Server
     {
-        public void Init()
-        {
-
-        }
-
-
-
         public void Customize(BusConfiguration configuration)
         {
             configuration.UsePersistence<RavenDBPersistence>();
@@ -62,11 +53,7 @@ namespace HA.COSMOS.Worker
             }
             return 0;
         }
-
-
     }
-
-
 
     public class ServiceEndPoint : IWantToRunWhenBusStartsAndStops
     {

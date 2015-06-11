@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FC922C4B-D97C-45FB-A38B-939129232648}</ProjectGuid>
+    <ProjectGuid>{C85C6701-AB35-48DD-A5A5-CD6C15D6751C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HA.COSMOS.Worker</RootNamespace>
@@ -99,7 +99,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EndpointConfig.cs" />
+    <Compile Include="..\HA.COSMOS.Worker\EndpointConfig.cs">
+      <Link>EndpointConfig.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
