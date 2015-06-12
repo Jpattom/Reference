@@ -20,6 +20,8 @@ namespace HA.COSMOS.Worker
             configuration.UseSerialization(typeof(BinarySerializer));
             configuration.SecondLevelRetries()
                 .CustomRetryPolicy(GetCustomRetryPolicy);
+            configuration.PurgeOnStartup(true);
+            
 
         }
 

@@ -1,6 +1,6 @@
 ﻿using NServiceBus.Saga;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -28,7 +28,7 @@ namespace HA.COSMOS.MessageHandlers
 
         public string Originator { get; set; }
 
-        internal Hashtable SagaResults { get; set; }
+        internal SortedDictionary<DateTime, string> SagaResults { get; set; }
 
         internal int NoOfProcessToBeCompletd { get; set; }
     }

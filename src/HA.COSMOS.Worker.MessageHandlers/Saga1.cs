@@ -6,6 +6,7 @@ using NServiceBus;
 using NServiceBus.Saga;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace HA.COSMOS.MessageHandlers
@@ -24,7 +25,7 @@ namespace HA.COSMOS.MessageHandlers
             var doJobs = new DoJob(message);
             doJobs.ProcessId = message.ProcessContext.ProcessId;
             this.Data.NoOfProcessToBeCompletd = 4;
-            Data.SagaResults = new Hashtable(4);
+            Data.SagaResults = new SortedDictionary<DateTime, string>();
 
             Bus.SendLocal(doJobs);
             RequestTimeout<EndSaga1>(DateTime.Now.AddSeconds(1), new EndSaga1(message));
@@ -38,13 +39,14 @@ namespace HA.COSMOS.MessageHandlers
             Console.WriteLine("Checking Satus of {0}", state.ProcessId);
             if ((Data.SagaResults != null) && (Data.SagaResults.Values != null) && (Data.SagaResults.Values.Count != 0))
             {
-                ArrayList sagaResultList = new ArrayList();
-                foreach (object obj in Data.SagaResults.Values)
+                
+                if (Data.SagaResults.Count == Data.NoOfProcessToBeCompletd)
                 {
-                    sagaResultList.Add(obj);
-                }
-                if (sagaResultList.Count == Data.NoOfProcessToBeCompletd)
-                {
+                    ArrayList sagaResultList = new ArrayList();
+                    foreach (object obj in Data.SagaResults.Values)
+                    {
+                        sagaResultList.Add(obj);
+                    }
                     ReplyToOriginator(new ReplyMessage(sagaResultList.ToArray(), state.SecurityToken, state.UserContext, state.ProcessContext));
                     MarkAsComplete();
                 }
